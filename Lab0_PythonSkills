@@ -32,3 +32,11 @@ year, month, day
 opening_price = float(opening_price)
 percent_change = float(percent_change)
 opening_price, percent_change
+
+# Calculate closing price
+closing_price = opening_price * (1 + percent_change / 100)
+# Print results
+print("Year:", year)
+print("Month:", month)
+print("Day:", day)
+print("Closing price: $", round(closing_price, 2))
