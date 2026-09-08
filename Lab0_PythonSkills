@@ -1,1 +1,13 @@
+# Exercise 1: Operations
+#
 
+print("Enter the amount of cash: ")
+tot_cash = int(input())
+print("Enter the number of people: ")
+people = int(input())
+
+div_cash = round(tot_cash / people, 2)
+remainder = str(round((tot_cash - (div_cash * people)),2))
+div_cash = str(div_cash)
+
+print("Each person receives $" + div_cash + ". $" + remainder + " is left.")
