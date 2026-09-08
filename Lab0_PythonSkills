@@ -40,3 +40,16 @@ print("Year:", year)
 print("Month:", month)
 print("Day:", day)
 print("Closing price: $", round(closing_price, 2))
+
+#Execrise 3: String Methods
+import re
+
+def remove_eric(text):
+  pattern = r'\beric\b'
+  return re.sub(pattern,' ', text, flags=re.IGNORECASE)
+
+text = input ("Enter a sentence: ")
+
+new_text = remove_eric(text)
+
+print("Result:", new_text)
