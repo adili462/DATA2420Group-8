@@ -11,3 +11,24 @@ remainder = str(round((tot_cash - (div_cash * people)),2))
 div_cash = str(div_cash)
 
 print("Each person receives $" + div_cash + ". $" + remainder + " is left.")
+
+# Exercise 2: String parsing
+# records in a log file have the following format:
+# date,stock_ticker,open_price,percent_change
+# example: 2024-10-03,AAPL,100.02,-2.3
+# extract year, month, day and prints closing price of stock
+
+example_record = "2024-10-03,AAPL,100.02,-2.3"
+
+record = input("Enter a record: ")
+# Split the record into its fields via ","
+date, stock_ticker, opening_price, percent_change = record.split(",")
+
+# Extract year, month, and day by splitting "-"
+year, month, day = date.split("-")
+year, month, day
+
+# convert float numbers
+opening_price = float(opening_price)
+percent_change = float(percent_change)
+opening_price, percent_change
