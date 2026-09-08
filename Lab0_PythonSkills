@@ -41,7 +41,7 @@ print("Month:", month)
 print("Day:", day)
 print("Closing price: $", round(closing_price, 2))
 
-#Execrise 3: String Methods
+# Execrise 3: String Methods
 import re
 
 def remove_eric(text):
