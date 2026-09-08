@@ -53,3 +53,19 @@ text = input ("Enter a sentence: ")
 new_text = remove_eric(text)
 
 print("Result:", new_text)
+
+
+# Exercise 4:
+#
+
+print("Enter the present value (PV): ")
+PV = int(input())
+print("Enter the growth rate (r): ")
+r = int(input())
+print("Enter the time (t): ")
+t = int(input())
+
+FV = PV*((r + 1)**t)
+FV = str(FV)
+
+print("The future value of your stock is $" + FV)
