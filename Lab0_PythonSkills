@@ -11,3 +11,4 @@ remainder = str(round((tot_cash - (div_cash * people)),2))
 div_cash = str(div_cash)
 
 print("Each person receives $" + div_cash + ". $" + remainder + " is left.")
+uyfyfy
