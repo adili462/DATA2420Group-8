@@ -10,7 +10,7 @@ def compute_BMI(height: float, weight: float) -> float:
     :param weight: weight in kg
     :return: BMI in kg/m**2
     """
-    BMI = weight / (height**2)
+    BMI = round(weight / (height**2),2)
     return BMI
 
 
