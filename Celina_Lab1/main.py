@@ -29,9 +29,12 @@ def parse_row(row: str) -> list:
         Patient_Name = values[2]
         weight = float(values[3])
         height = float (values[4])
-    except:
-        print("error in parse_row")
-        
+    except ValueError:
+        raise TextFormatException()
+
+    if height > 3:
+        raise MeasurementUnitException
+  
     return [exam_ID, Date, Patient_Name, weight, height]
 
 
@@ -42,14 +45,17 @@ def main():
     output_file=open("output.csv", "w")
 
     output_file.write("ExamID,BMI\n")
-     # input_file.readline() -> is this line necessary?
 
     for row in input_file:
         try:
             L = parse_row(row)
             output_file.write(str(L[0])+","+str(compute_BMI(L[4],L[3]))+"\n")
-        except Exception as e:
-            print(e)
+        except TextFormatException:
+            print(f"Exam {exam_ID}: Invalid text format.")
+        except MeasurementUnitException:
+            print(f"Exam {exam_ID}: Height should be in meters instead of feet.")
+        except MissingValueException:
+            print(f"Exam {exam_ID}: A value is missing.")
 
 
     input_file.close()
