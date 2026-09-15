@@ -10,8 +10,8 @@ def compute_BMI(height: float, weight: float) -> float:
     :param weight: weight in kg
     :return: BMI in kg/m**2
     """
-    raise NotImplementedError("you need to write this function")
-
+    bmi = weight / mass ** 2
+    raise TextFormatException()
 
 def parse_row(row: str) -> list:
     """
@@ -20,12 +20,27 @@ def parse_row(row: str) -> list:
     :param row: the string row read from the file
     :return: the parsed row, as a list
     """
-    raise NotImplementedError("you need to write this function")
-
+    values = row.strip().split(",")
+    try:
+        exam_ID = int(values[0])
+        date = values[1]
+        patient_name = values[2]
+        weight = float(values[3])
+        height = float(values[4])
+    except ValueError:
+        raise TextFormatException()
 
 def main():
-    
-    # your code here
-
+    input_file = open("data.csv", "r")
+    output_file = open("output.csv", "w")
+    output_file.write("Exam ID, BMI\n")
+    input_file.readline()
+    for row in input_file:
+        exam_id = row.split(",")[0]
+        try:
+            #
+        except: TextFormatException:
+            print(f"Exam {exam_id}: Invalid text format.")
+            # add other exceptions
 
 main()
