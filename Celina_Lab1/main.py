@@ -44,7 +44,7 @@ def main():
     input_file=open("data.csv", "r")
     output_file=open("output.csv", "w")
 
-    output_file.write("ExamID,BMI\n")
+    output_file.write("Exam ID,BMI\n")
 
     for row in input_file:
         try:
