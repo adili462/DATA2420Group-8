@@ -28,9 +28,11 @@ def parse_row(row: str) -> list:
         patient_name = values[2]
         weight = float(values[3])
         height = float(values[4])
-        
     except ValueError:
         raise TextFormatException()
+        
+    if height > 3: # nobody is 3m tall
+        raise MeasurementUnitException
     
     return [exam_ID, date, pateint_name, weight, height]
 
@@ -41,23 +43,23 @@ def main():
     input_file.readline() #skipping header
     
     for row in input_file:
-    exam_id = row.split(",")[0]
+        exam_id = row.split(",")[0]
     
-    try:
-        values = parse_row(row)
-        exam_ID = values[0]
-        weight = values[3]
-        height = values[4]
-        bmi = compute_BMI(height, weight)
-        output_file.write(f"{exam_ID},{bmi:.2f}\n")
-        
-    except TextFormatException:
-        print(f"Exam {exam_id}: Invalid text format.")
-        
-    except MeasurementUnitException:
-        print(f"Exam {exam_id}: Height entered in wrong unit.")
-        
-    except MissingValueException:
-        print(f"Exam {exam_id}: Missing a value.")
+        try:
+            values = parse_row(row)
+            exam_ID = values[0]
+            weight = values[3]
+            height = values[4]
+            bmi = compute_BMI(height, weight)
+            output_file.write(f"{exam_ID},{bmi:.2f}\n")
+        except TextFormatException:
+            print(f"Exam {exam_id}: Invalid text format.")
+        except MeasurementUnitException:
+            print(f"Exam {exam_id}: Height entered in wrong unit.")
+        except MissingValueException:
+            print(f"Exam {exam_id}: Missing a value.")
+
+    input_file.close()
+    output_file.close()
 
 main()
