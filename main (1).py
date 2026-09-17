@@ -20,7 +20,7 @@ def parse_row(row: str) -> list:
     :param row: the string row read from the file
     :return: the parsed row, as a list
     """
-    values = row.strip().split(",")
+    values = row.strip().split(",") #split the row into values
     
     try:
         exam_ID = int(values[0])
@@ -28,6 +28,7 @@ def parse_row(row: str) -> list:
         patient_name = values[2]
         weight = float(values[3])
         height = float(values[4])
+        
     except ValueError:
         raise TextFormatException()
     
@@ -36,10 +37,12 @@ def parse_row(row: str) -> list:
 def main():
     input_file = open("data.csv", "r")
     output_file = open("output.csv", "w")
-    output_file.write("Exam ID, BMI\n")
-    input_file.readline()
+    output_file.write("Exam ID, BMI\n") 
+    input_file.readline() #skipping header
+    
     for row in input_file:
     exam_id = row.split(",")[0]
+    
     try:
         values = parse_row(row)
         exam_ID = values[0]
@@ -47,10 +50,13 @@ def main():
         height = values[4]
         bmi = compute_BMI(height, weight)
         output_file.write(f"{exam_ID},{bmi:.2f}\n")
+        
     except TextFormatException:
         print(f"Exam {exam_id}: Invalid text format.")
+        
     except MeasurementUnitException:
         print(f"Exam {exam_id}: Height entered in wrong unit.")
+        
     except MissingValueException:
         print(f"Exam {exam_id}: Missing a value.")
 
