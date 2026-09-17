@@ -2,6 +2,7 @@
 # raise/handle them just like Exception, ValueError, or any other type of exception
 from exceptions import TextFormatException, MissingValueException, MeasurementUnitException
 import csv
+from datetime import datetime
 
 def compute_BMI(height: float, weight: float) -> float:
     """
@@ -33,6 +34,15 @@ def parse_row(row: str) -> list:
         
     if height > 3: # nobody is 3m tall
         raise MeasurementUnitException
+    if weight > 90:
+        raise MeasurementUnitException
+    if any(char.isdigit() for char in patient_name):
+    raise TextFormatException()
+
+    try:
+        datetime.strptime(date, "%Y-%m-%d")
+    except ValueError:
+        raise TextFormatException()
     
     return [exam_ID, date, pateint_name, weight, height]
 
