@@ -1,7 +1,7 @@
 # this line imports some custom exceptions for use in this lab
 # raise/handle them just like Exception, ValueError, or any other type of exception
 from exceptions import TextFormatException, MissingValueException, MeasurementUnitException
-
+import csv
 
 def compute_BMI(height: float, weight: float) -> float:
     """
