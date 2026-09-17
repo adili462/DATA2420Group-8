@@ -10,8 +10,8 @@ def compute_BMI(height: float, weight: float) -> float:
     :param weight: weight in kg
     :return: BMI in kg/m**2
     """
-    bmi = weight / mass ** 2
-    raise TextFormatException()
+    BMI = weight / mass ** 2
+    return BMI
 
 def parse_row(row: str) -> list:
     """
@@ -21,6 +21,7 @@ def parse_row(row: str) -> list:
     :return: the parsed row, as a list
     """
     values = row.strip().split(",")
+    
     try:
         exam_ID = int(values[0])
         date = values[1]
@@ -29,6 +30,8 @@ def parse_row(row: str) -> list:
         height = float(values[4])
     except ValueError:
         raise TextFormatException()
+    
+    return [exam_ID, date, pateint_name, weight, height]
 
 def main():
     input_file = open("data.csv", "r")
@@ -36,11 +39,19 @@ def main():
     output_file.write("Exam ID, BMI\n")
     input_file.readline()
     for row in input_file:
-        exam_id = row.split(",")[0]
-        try:
-            #
-        except: TextFormatException:
-            print(f"Exam {exam_id}: Invalid text format.")
-            # add other exceptions
+    exam_id = row.split(",")[0]
+    try:
+        values = parse_row(row)
+        exam_ID = values[0]
+        weight = values[3]
+        height = values[4]
+        bmi = compute_BMI(height, weight)
+        output_file.write(f"{exam_ID},{bmi:.2f}\n")
+    except TextFormatException:
+        print(f"Exam {exam_id}: Invalid text format.")
+    except MeasurementUnitException:
+        print(f"Exam {exam_id}: Height entered in wrong unit.")
+    except MissingValueException:
+        print(f"Exam {exam_id}: Missing a value.")
 
 main()
