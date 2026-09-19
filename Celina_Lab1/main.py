@@ -40,8 +40,30 @@ def parse_row(row: str) -> list:
         raise TextFormatException(f"Exam no. {exam_ID}: Invalid text format.")
 
     if height > 3:
-        raise MeasurementUnitException(f"Exam no. {exam_ID}: A value is missing.")
-  
+        raise MeasurementUnitException(f"Exam no. {exam_ID}: A value is in the wrong units.")
+    if weight > 90:
+        raise MeasurementUnitException(f"Exam no. {exam_ID}: A value is in the wrong units.")
+
+    if not(" " in Patient_Name):
+        raise TextFormatException(f"Exam no. {exam_ID}: Patient name formatted incorrectly.")
+    if not("/" in Date):
+        raise TextFormatException(f"Exam no. {exam_ID}: Date formatted incorrectly.")
+
+    
+    check_Date = Date.split("/")
+    for x in range(len(check_Date)):
+        check_Date[x] = float(check_Date[x])
+    if len(check_Date) != 3:
+        raise TextFormatException(f"Exam no. {exam_ID}: Date formatted incorrectly.")
+    if 1 > check_Date[0] or check_Date[0] >12:
+        raise TextFormatException(f"Exam no. {exam_ID}: Date formatted incorrectly.")
+    if 1 > check_Date[1] or check_Date[1]>31:
+        raise TextFormatException(f"Exam no. {exam_ID}: Date formatted incorrectly.")
+    if 2000 > check_Date[2] or check_Date[2]>2026:
+        raise TextFormatException(f"Exam no. {exam_ID}: Date formatted incorrectly.")
+
+    
+    
     return [exam_ID, Date, Patient_Name, weight, height]
 
 
@@ -53,7 +75,7 @@ def main():
 
     output_file.write("Exam ID,BMI\n")
 
-    next(input_file)
+    next(input_file) #skips header from input_file
 
     for row in input_file:
         try:
@@ -70,6 +92,7 @@ def main():
     input_file.close()
     output_file.close()
 
-
+#edge cases
+#row = [17,10/9/2002, Zephyr Crael,79,1.55]
 
 main()
