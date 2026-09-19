@@ -92,7 +92,4 @@ def main():
     input_file.close()
     output_file.close()
 
-#edge cases
-#row = [17,10/9/2002, Zephyr Crael,79,1.55]
-
 main()
