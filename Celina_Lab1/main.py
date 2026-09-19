@@ -81,12 +81,12 @@ def main():
         try:
             L = parse_row(row)
             output_file.write(str(L[0])+","+str(compute_BMI(L[4],L[3]))+"\n")
-        except TextFormatException:
-            print(f"Exam {exam_ID}: Invalid text format.")
-        except MeasurementUnitException:
-            print(f"Exam {exam_ID}: Height should be in meters instead of feet.")
-        except MissingValueException:
-            print(f"Exam {exam_ID}: A value is missing.")
+        except TextFormatException as tfe:
+            print(tfe)
+        except MeasurementUnitException as mue:
+            print(mue)
+        except MissingValueException as mve:
+            print(mve)
 
 
     input_file.close()
