@@ -75,6 +75,8 @@ def main():
 
     output_file.write("ExamID,BMI\n")
 
+    next(input_file) #skips header from input_file
+
     for row in input_file:
         try:
             L = parse_row(row)
