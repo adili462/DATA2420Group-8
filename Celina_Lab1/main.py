@@ -23,17 +23,24 @@ def parse_row(row: str) -> list:
     """
     values = row.strip().split(",")
 
+
+
     try:
         exam_ID = int(values[0])
+
+        if len(values) != 5:
+                raise MissingValueException(f"Exam no. {exam_ID}: A value is missing.")
+        
         Date = values[1]
         Patient_Name = values[2]
         weight = float(values[3])
         height = float (values[4])
+
     except ValueError:
-        raise TextFormatException()
+        raise TextFormatException(f"Exam no. {exam_ID}: Invalid text format.")
 
     if height > 3:
-        raise MeasurementUnitException
+        raise MeasurementUnitException(f"Exam no. {exam_ID}: A value is missing.")
   
     return [exam_ID, Date, Patient_Name, weight, height]
 
@@ -46,16 +53,18 @@ def main():
 
     output_file.write("Exam ID,BMI\n")
 
+    next(input_file)
+
     for row in input_file:
         try:
             L = parse_row(row)
             output_file.write(str(L[0])+","+str(compute_BMI(L[4],L[3]))+"\n")
-        except TextFormatException:
-            print(f"Exam {exam_ID}: Invalid text format.")
-        except MeasurementUnitException:
-            print(f"Exam {exam_ID}: Height should be in meters instead of feet.")
-        except MissingValueException:
-            print(f"Exam {exam_ID}: A value is missing.")
+        except TextFormatException as tfe:
+            print(tfe)
+        except MeasurementUnitException as mue:
+            print(mue)
+        except MissingValueException as mve:
+            print(mve)
 
 
     input_file.close()
