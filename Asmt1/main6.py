@@ -23,7 +23,7 @@ def check_data_format(file_name: str) -> str:
             raise ValueError("Error, data must be in valid CSV or HTML format")
 
 # load data
-filename = './Asmt1/Data/census_shorter.txt'
+filename = './Asmt1/Data/student_dataset.txt'
 data_format = check_data_format(filename)
 
 if data_format == 'html':
@@ -33,4 +33,4 @@ elif data_format == 'csv':
     table = load_from_csv(filename)
 
 # print table statistics
-#print_stats(table)
+print_stats(table)
