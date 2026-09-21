@@ -1,4 +1,5 @@
 from data_IO_Lab2 import load_data
+from frequencies_jess_dont_merge_main import create_frequency_dict
 
 # create a set of stopwords from the stopwords.txt file
 file_stopwords = './Jess_Lab2/stopwords.txt'
