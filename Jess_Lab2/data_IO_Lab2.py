@@ -4,7 +4,7 @@ def strip_punctuation(word: str) -> str:
     """Remove punctuation from a word."""
     return ''.join(char for char in word if char.isalnum())
 
-def load_data(file_name: str, data_format: str):
+def load_data(file_name: str, data_format: str, stopwords: set):
     """Load words from a newline-delimited text file."""
     if data_format == 'txt':
         # check separator between words (' ' or '\n')
@@ -18,10 +18,15 @@ def load_data(file_name: str, data_format: str):
                 return {line1.strip()} | {word.strip() for word in file if word.strip()}
             else:
                 file.seek(0)  # reset file pointer to the beginning of the file
+                words = []
                 for line in file:
                     if line.strip():  # skip empty lines
                         # create list of lower-case words without punctuation and whitespace
-                        words = [strip_punctuation(word).strip().lower() for word in line.split(' ') if word.strip()]
+                        for word in line.split(' '):
+                            if word.strip():  # skip empty words
+                                word = strip_punctuation(word).strip().lower()
+                                if word not in stopwords:
+                                    words.append(word)
                         return words
                 # remove line1 part
                 # if the first line contains spaces, assume words are separated by spaces
