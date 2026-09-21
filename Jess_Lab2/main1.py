@@ -1,0 +1,14 @@
+from data_IO_Lab2 import load_data
+
+# create a set of stopwords from the stopwords.txt file
+file_stopwords = './Jess_Lab2/stopwords.txt'
+stopwords = load_data(file_stopwords, 'txt')
+print(f"Stopwords: {stopwords}")
+
+# create lists of words from textA and textB, excluding stopwords
+file_textA = './Jess_Lab2/textA.txt'
+textA_words = load_data(file_textA, 'txt')
+file_textB = './Jess_Lab2/textB.txt'
+textB_words = load_data(file_textB, 'txt')
+print(textA_words)
+print(textB_words)
