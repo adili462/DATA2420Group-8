@@ -26,3 +26,5 @@ def load_words(filename, stopwords):
         if word and word not in stopwords:
             words.append(word)
     return words
+
+# Step 2: 
