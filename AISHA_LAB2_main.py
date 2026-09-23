@@ -17,7 +17,6 @@ def split_into_raw_words(text):
 
 
 def clean_word(word):
-    """Lowercase a single word and strip punctuation from its ends."""
     # removes punctuation in the beginning or end of word
     stripped = word.strip(string.punctuation)
     cleaned = stripped.lower()
