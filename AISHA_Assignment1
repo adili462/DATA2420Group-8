@@ -1,1 +1,37 @@
+def load_from_csv(filename: str) -> list[dict]:
+    with open(filename, 'r') as file:
+        contents = file.read()
 
+    lines = contents.splitlines()
+
+    # the first line is the header row 
+    header_line = lines[0]
+    columns = header_line.split(',')
+
+    all_rows = []
+    for line in lines[1:]:  # skip the header
+        if line == '':  # skip blank trailing lines
+            continue
+
+        values = line.split(',')
+
+        # checking if the row has the right number of values in it
+        if len(values) != len(columns):
+            raise Exception(f'wrong number of values in row: {line}')
+
+        this_row_dict = dict()
+        for i in range(len(columns)):
+            this_column = columns[i]
+            this_value = values[i].strip()
+
+            # convert to float if the value is a number
+            try:
+                this_value = float(this_value)
+            except ValueError:
+                pass
+
+            this_row_dict[this_column] = this_value
+
+        all_rows.append(this_row_dict)
+
+    return all_rows
