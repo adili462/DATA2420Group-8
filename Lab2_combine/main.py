@@ -88,6 +88,8 @@ def run_step_1(text_files, stopwords_file):
 
 def main():
     # Step 1: read the files
+        words_doc1, words_doc2 = run_step_1(TEXT_FILES, STOPWORDS_FILE)
+        
     # Step 2: calculate term frequencies
     # Step 3: reduce to unique words
     return
