@@ -112,6 +112,28 @@ def term_frequencies(counts):
     return frequencies
 
 # Step 3: Reduce to unique words
+def find_common_words(dict_a, dict_b):
+    # .keys() gives us each dict's words, wrapping in set(), return the words found in BOTH sets
+    keys_a = set(dict_a.keys())
+    keys_b = set(dict_b.keys())
+    return keys_a & keys_b
+
+
+def remove_words(dictionary, words_to_remove):
+    # start with a fresh empty dict, copy over the wordpairs NOT in words_to_remove
+    reduced_dict = {}
+    for word, value in dictionary.items():
+        if word not in words_to_remove:
+            reduced_dict[word] = value
+    return reduced_dict
+
+
+def reduce_to_unique_words(dict_a, dict_b):
+    # find which words the two documents share, remove then leave unique words
+    common_words = find_common_words(dict_a, dict_b)
+    unique_a = remove_words(dict_a, common_words)
+    unique_b = remove_words(dict_b, common_words)
+    return unique_a, unique_b, common_words
 
 # tie Step 1, 2, and 3 together
 def run_step_1(text_files, stopwords_file):
@@ -130,7 +152,9 @@ def run_step_2(words_doc1, words_doc2):
     freq_doc2 = term_frequencies(counts_doc2)
     return freq_doc1, freq_doc2
 
-
+def run_step_3(freq_doc1, freq_doc2):
+    unique_doc1, unique_doc2, common_words = reduce_to_unique_words(freq_doc1, freq_doc2)
+    return unique_doc1, unique_doc2, common_words
 
 def print_results(text_files, unique_doc1, unique_doc2, common_words):
     print(f'Words common to both documents ({len(common_words)}):')
