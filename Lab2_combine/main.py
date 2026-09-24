@@ -77,6 +77,13 @@ def load_words(filename, stopwords):
 # Step 3: Reduce to unique words
 
 # tie Step 1, 2, and 3 together
+def run_step_1(text_files, stopwords_file):
+    # read the stopwords and both text files, return their word lists
+    stopwords = load_stopwords(stopwords_file)
+    words_doc1 = load_words(text_files[0], stopwords)
+    words_doc2 = load_words(text_files[1], stopwords)
+    return words_doc1, words_doc2
+
 
 
 def main():
