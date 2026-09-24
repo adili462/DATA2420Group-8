@@ -174,6 +174,7 @@ def main():
     freq_doc1, freq_doc2 = run_step_2(words_doc1, words_doc2)
 
     # Step 3: reduce to unique words
+    unique_doc1, unique_doc2, common_words = run_step_3(freq_doc1, freq_doc2)
     
     print_results(TEXT_FILES, unique_doc1, unique_doc2, common_words)
 
