@@ -7,7 +7,6 @@ def strip_punctuation(word: str) -> str:
 def load_data(file_name: str, data_format: str, stopwords: set):
     """Load words from a newline-delimited text file."""
     if data_format == 'txt':
-        # check separator between words (' ' or '\n')
         with open(file_name, 'r') as file:
             # return a set of non-empty words
             line1 = next(file)  # read the first line to check for separator
