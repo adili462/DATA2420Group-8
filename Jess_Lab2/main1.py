@@ -44,8 +44,8 @@ def main():
     print(f"Shared words between textA and textB: {shared}")
 
     # remove shared words from textA and textB
-    textA_unique = [word for word in textA_words if word not in shared]
-    textB_unique = [word for word in textB_words if word not in shared]
+    textA_unique = {word for word in textA_words if word not in shared}
+    textB_unique = {word for word in textB_words if word not in shared}
     print(f"Unique words in textA: {textA_unique}")
     print(f"Unique words in textB: {textB_unique}")
 
