@@ -73,6 +73,43 @@ def load_words(filename, stopwords):
     return filter_words(cleaned_words, stopwords)
 
 # Step 2: Calculate term frequencies
+def count_words(words):
+    # how many times a word shows up
+    counts = {}
+    for word in words:
+        # if we've seen this word already, add 1 to its existing count
+        if word in counts:
+            counts[word] += 1
+        # start count at 1
+        else:
+            counts[word] = 1
+    return counts
+
+
+def total_word_count(counts):
+    return sum(counts.values())
+
+
+def calculate_term_frequency(count, total_words):
+    if total_words == 0:
+        raise ValueError('cannot compute term frequency: document has no words')
+        # edge case: if file is empty due to all stop words
+    return count / total_words
+
+
+def term_frequencies(counts):
+    # document's total word count once
+    total_words = total_word_count(counts)
+
+    # check this BEFORE the loop, since if counts is empty, the loop runs zero times 
+    if total_words == 0:
+        raise ValueError('cannot compute term frequencies: document has no words')
+
+    # this dict will map word (its term frequency score)
+    frequencies = {}
+    for word, count in counts.items():
+        frequencies[word] = calculate_term_frequency(count, total_words)
+    return frequencies
 
 # Step 3: Reduce to unique words
 
@@ -84,15 +121,37 @@ def run_step_1(text_files, stopwords_file):
     words_doc2 = load_words(text_files[1], stopwords)
     return words_doc1, words_doc2
 
+def run_step_2(words_doc1, words_doc2):
+    # turn each word list into a term-frequency dict
+    counts_doc1 = count_words(words_doc1)
+    counts_doc2 = count_words(words_doc2)
 
+    freq_doc1 = term_frequencies(counts_doc1)
+    freq_doc2 = term_frequencies(counts_doc2)
+    return freq_doc1, freq_doc2
+
+
+
+def print_results(text_files, unique_doc1, unique_doc2, common_words):
+    print(f'Words common to both documents ({len(common_words)}):')
+    print(common_words)
+
+    print(f'\nUnique term frequencies for {text_files[0]}:')
+    print(unique_doc1)
+
+    print(f'\nUnique term frequencies for {text_files[1]}:')
+    print(unique_doc2)
 
 def main():
     # Step 1: read the files
-        words_doc1, words_doc2 = run_step_1(TEXT_FILES, STOPWORDS_FILE)
+    words_doc1, words_doc2 = run_step_1(TEXT_FILES, STOPWORDS_FILE)
         
     # Step 2: calculate term frequencies
+    freq_doc1, freq_doc2 = run_step_2(words_doc1, words_doc2)
+
     # Step 3: reduce to unique words
-    return
+    
+    print_results(TEXT_FILES, unique_doc1, unique_doc2, common_words)
 
 if __name__ == '__main__':
     main()
