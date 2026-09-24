@@ -18,6 +18,10 @@ def main():
     textA_words = load_data(file_textA, 'txt', stopwords)
     file_textB = './Jess_Lab2/textB.txt'
     textB_words = load_data(file_textB, 'txt', stopwords)
+    file_special_case = './Jess_Lab2/only_stopwords.txt'
+    special_case_words = load_data(file_special_case, 'txt', stopwords)
+    file_error_case = './Jess_Lab2/empty.txt'
+    error_case_words = load_data(file_error_case, 'txt', stopwords)
     #print(textA_words)
     #print(textB_words)
 
