@@ -25,7 +25,7 @@ def build_dict(L:list)->dict:
         if word not in dictionary:
             dictionary[word] = 1
         else:
-            dictionary[word] = dict.get(word) + 1
+            dictionary[word] += 1
     return dictionary
 
 
