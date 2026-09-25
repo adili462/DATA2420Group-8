@@ -36,7 +36,7 @@ def load_from_html(filename: str) -> list[dict]:
 
             # check the row has the right number of values in it
             if len(values) != len(columns):
-                raise Exception(f'wrong number of values in row: {row_text}')
+                raise AttributeError('wrong number of values in row: '  + row_text)
 
             this_row_dict = dict()
             for i in range(len(columns)):
@@ -95,7 +95,7 @@ def load_from_csv(filename: str) -> list[dict]:
             # check the row has the right number of values in it
             if len(values_list) != len(columns):
                 print(len(values_list), "!= columns length", len(columns))
-                raise Exception(f'wrong number of values in row: {row_text}')
+                raise AttributeError('wrong number of values in row: ' + '\n' + row_text)
 
             this_row_dict = dict()
             for i in range(len(columns)):
