@@ -47,7 +47,4 @@ def main():
     # make list of dictionaries
     # write to JSON format
 
-    '''jess part'''
-    # process corrupted data
-
 main()
