@@ -32,5 +32,29 @@ elif data_format == 'csv':
     #print("CSV format detected, but load_from_csv is not yet implemented.")
     table = load_from_csv(filename)
 
+
+#saves data in JSON .txt file
+output_json = open("output_json.txt", "w")
+output_json.write("[\n")
+
+columns = list(table[0])
+
+for dict in table:
+    output_json.write("{")
+    for x in columns:
+        if not(type(dict[x]) == str):
+            val = str(dict[x])
+        else:
+            val = dict[x]
+        output_json.write(f'"{x}": {val},')
+    output_json.write("},")
+
+
+output_json.write("]")
+output_json.close()
+                  
+
+
+
 # print table statistics
 print_stats(table)

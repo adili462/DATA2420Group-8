@@ -103,7 +103,7 @@ def term_frequencies(counts):
 
     # check this BEFORE the loop, since if counts is empty, the loop runs zero times 
     if total_words == 0:
-        raise ValueError('cannot compute term frequencies: document has no words')
+        raise ValueError('cannot compute term frequencies: document only contains stop words')
 
     # this dict will map word (its term frequency score)
     frequencies = {}
