@@ -20,19 +20,26 @@ def check_data_format(file_name: str) -> str:
         elif ',' in header:
             return 'csv'
         else:
-            raise ValueError("Error, data must be in valid CSV or HTML format")
+            raise Exception("Error, data must be in valid CSV or HTML format")
 
-# load data
-filename = './Asmt1/Data/student_dataset.txt'
-data_format = check_data_format(filename)
+def main():
+    # load data
+    filename = './Asmt1/Data/student_dataset.txt'
+    #filename = './Asmt1/Data/test.arff'
 
-if data_format == 'html':
-    table = load_from_html(filename)
-elif data_format == 'csv':
-    #print("CSV format detected, but load_from_csv is not yet implemented.")
-    table = load_from_csv(filename)
-
-
+    try:
+        data_format = check_data_format(filename)
+        if data_format == 'html':
+            table = load_from_html(filename)
+        elif data_format == 'csv':
+            table = load_from_csv(filename)
+    except Exception as e:
+        print(e)
+        return
+    except AttributeError as ae:
+        print(ae)
+        return
+      
 #saves data in JSON .txt file
 output_json = open("output_json.txt", "w")
 output_json.write("[\n")
@@ -59,8 +66,7 @@ for dict in table:
 output_json.write("]")
 output_json.close()
                   
-
-
+main()
 
 # print table statistics
 print_stats(table)
