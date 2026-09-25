@@ -39,12 +39,34 @@ def main():
     except AttributeError as ae:
         print(ae)
         return
+      
+#saves data in JSON .txt file
+output_json = open("output_json.txt", "w")
+output_json.write("[\n")
 
-    # print table statistics
-    print_stats(table)
+columns = list(table[0])
+last_column = columns[len(columns)-1]
+last_dictionary = table[len(table)-1]
 
-    '''Celina part'''
-    # make list of dictionaries
-    # write to JSON format
+for dict in table:
+    output_json.write("{")
+    for x in columns:
+        if not(type(dict[x]) == str):
+            val = str(dict[x])
+        else:
+            val = dict[x]
+        output_json.write(f'"{x}": {val}')
+        if not(last_column == x):
+            output_json.write(",")
+    output_json.write("}")
+    if not (last_dictionary == dict):
+        output_json.write(",")
 
+
+output_json.write("]")
+output_json.close()
+                  
 main()
+
+# print table statistics
+print_stats(table)
