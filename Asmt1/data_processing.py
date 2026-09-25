@@ -12,12 +12,17 @@ def print_stats(data: list[dict]) -> None:
         # determine if this is a text or numeric column
         if type(data[0][column]) == float:
             # process this as a numeric column
-            pass # not in this partial solution :)
+            value_counts = dict()
+            for row in data:
+                value_counts[row[column]] = value_counts.get(row[column], 0) + 1
+            # calculate the average
+            total = sum(value_counts.keys())
+            average = total / len(value_counts) if value_counts else 0
+            print(f"average value for {column}: {average}")
 
         else:  # this is a text column
-            
-            # build a dict that counts number of times we've seen each value
-            # within this column
+        # build a dict that counts number of times we've seen each value
+        # within this column
             value_counts = dict()
             for row in data:
                 value_counts[row[column]] = value_counts.get(row[column], 0) + 1
