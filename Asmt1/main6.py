@@ -38,6 +38,8 @@ output_json = open("output_json.txt", "w")
 output_json.write("[\n")
 
 columns = list(table[0])
+last_column = columns[len(columns)-1]
+last_dictionary = table[len(table)-1]
 
 for dict in table:
     output_json.write("{")
@@ -46,8 +48,12 @@ for dict in table:
             val = str(dict[x])
         else:
             val = dict[x]
-        output_json.write(f'"{x}": {val},')
-    output_json.write("},")
+        output_json.write(f'"{x}": {val}')
+        if not(last_column == x):
+            output_json.write(",")
+    output_json.write("}")
+    if not (last_dictionary == dict):
+        output_json.write(",")
 
 
 output_json.write("]")
