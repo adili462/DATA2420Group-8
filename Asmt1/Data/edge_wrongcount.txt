@@ -1,0 +1,3 @@
+name,age,major
+Alice,20,Biology
+Bob,21

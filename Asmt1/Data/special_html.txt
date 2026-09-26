@@ -1,0 +1,8 @@
+<table>
+<thead>
+<tr><td>name</td><td>score</td></tr>
+</thead>
+<tbody>
+<tr><td>Dave</td><td>100</td></tr>
+</tbody>
+</table>
