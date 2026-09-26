@@ -1,0 +1,4 @@
+name,age,major
+Alice,20,Biology
+Bob,21,Physics
+Carol,22,Biology
