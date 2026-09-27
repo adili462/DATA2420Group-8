@@ -40,33 +40,32 @@ def main():
         print(ae)
         return
       
-#saves data in JSON .txt file
-output_json = open("output_json.txt", "w")
-output_json.write("[\n")
+    #saves data in JSON .txt file
+    output_json = open("output_json.txt", "w")
+    output_json.write("[\n")
 
-columns = list(table[0])
-last_column = columns[len(columns)-1]
-last_dictionary = table[len(table)-1]
+    columns = list(table[0])
+    last_column = columns[len(columns)-1]
+    last_dictionary = table[len(table)-1]
 
-for dict in table:
-    output_json.write("{")
-    for x in columns:
-        if not(type(dict[x]) == str):
-            val = str(dict[x])
-        else:
-            val = dict[x]
-        output_json.write(f'"{x}": {val}')
-        if not(last_column == x):
+    for dict in table:
+        output_json.write("{")
+        for x in columns:
+            if not(type(dict[x]) == str):
+                val = str(dict[x])
+            else:
+                val = dict[x]
+            output_json.write(f'"{x}": {val}')
+            if not(last_column == x):
+                output_json.write(",")
+        output_json.write("}")
+        if not (last_dictionary == dict):
             output_json.write(",")
-    output_json.write("}")
-    if not (last_dictionary == dict):
-        output_json.write(",")
 
 
-output_json.write("]")
-output_json.close()
+    output_json.write("]")
+    output_json.close()
+    # print table statistics
+    print_stats(table)
                   
 main()
-
-# print table statistics
-print_stats(table)
