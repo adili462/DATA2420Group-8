@@ -1,0 +1,4 @@
+name,gpa,year
+Alice,3.5,Freshman
+Bob,-1.0,Freshman
+Carol,2.75,Senior
