@@ -26,6 +26,8 @@ class Dog:
     def __init__(self, name: str):
         self.name = name    # instance variable unique to each instance
 
+    def add_trick(self, trick):
+            self.tricks.append(trick)
 '''
 >>> d = Dog('Fido')
 >>> e = Dog('Buddy')
@@ -37,4 +39,10 @@ class Dog:
 'Fido'
 >>> e.name                  # unique to e
 'Buddy'
+>>> d.add_trick('roll over')
+>>> e.add_trick('play dead')
+>>> d.tricks
+['roll over']
+>>> e.tricks
+['play dead']
 '''
