@@ -1,15 +1,13 @@
-from Jess_lab1_testing.exceptions import TextFormatException, MissingValueException, MeasurementUnitException
+from exceptions import TextFormatException, MissingValueException, MeasurementUnitException
 from classes import PatientExam
+from pathlib import Path
 import csv
 
-def compute_BMI(height: float, weight: float) -> float:
-    """
-    compute body-mass-index:  weight / (height**2)
-    :param height: height in meters
-    :param weight: weight in kg
-    :return: BMI in kg/m**2 rounded to 2 decimals
-    """
-    return round(weight / height**2, 2)
+def parse_month(mon: int) -> str:
+    month_names = ['January', 'February', 'March', 'April', 'May', 'June',
+                   'July', 'August', 'September', 'October', 'November', 'December']
+    mon_str = month_names[mon-1]
+    return mon_str
 
 def parse_row(row: str) -> list:
     """
@@ -35,60 +33,72 @@ def parse_row(row: str) -> list:
     # scan for exceptions
     if not eID.strip(): # detect missing values (empty strings) before attempting conversion
         raise MissingValueException(f"Missing value for Exam ID {r_items[0]}")
-        #return ['Missing value in this row:', row] # edit return message, generic, only needed for length
 
     r_items[0] = int(eID) # exam ID -> int
     eID_int = r_items[0] # store int version of exam ID for exception message
 
     if not weight_kg.strip():
-        raise MissingValueException(f"Missing value for Exam ID {eID_int}")
-        #return ['Missing value in this row:', row]
-    r_items[3] = float(weight_kg) # if weight not missing, convert to float
+        raise MissingValueException(f"Missing value for weight, Exam ID {eID_int}")
+
+    if not weight_kg.isdigit(): # if weight is not an integer string, raise format error
+        raise TextFormatException(f"Invalid weight format for Exam ID {eID_int}: is float, expected int")
+    r_items[3] = int(weight_kg) # if weight not missing, convert to int
 
     if not height_m.strip():
-        raise MissingValueException(f"Missing value for Exam ID {eID_int}")
-        #return ['Missing value in this row:', row]
+        raise MissingValueException(f"Missing value for height, Exam ID {eID_int}")
     r_items[4] = float(height_m) # if height not missing, convert to float
 
     if r_items[4] > 3.0: # if height is greater than 3 meters, raise MeasurementUnitException
-        raise MeasurementUnitException(f"Invalid measurement unit for Exam ID {eID_int}")
-        #return ['Invalid measurement unit in this row:', row]
+        raise MeasurementUnitException(f"Invalid measurement unit for height, Exam ID {eID_int}")
 
     return r_items
 
 
 def main():
-    # step 1: read row from csv to string
-    # -> master_string_list = list of each patient row stored as a string
-    with open('data.csv', newline='') as csvfile:
-        """
-        read csv and output each row as a string item in a list
-        :return: each row as a string item in input_string_list
-        """
+    ''' * modified from Lab 1 *
+    Using the PatientExam class, main() parses each row of CSV file into a PatientExam object.
+    Task 2: Creates list of PatientExam objects from CSV file.
+    Task 3: Computes average BMI across all patients and busiest exam month for the clinic.
+    '''
+    data_file = Path(__file__).parent / 'data' / 'patient_data.csv'
+    with open(data_file, newline='') as csvfile:
         datareader = csv.reader(csvfile, delimiter=',')
         header = next(datareader) # removes header
-        master_string_list = []
-        for row in datareader:
-            master_string_list.append(','.join(row))
+        all_patients = [] # list to hold PatientExam objects
+        all_bmi = [] # list to hold BMI values for all patients
+        exam_months_count = { # dict to hold exam months for all patients
+            1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0
+        }
 
-    # step 2: parse_row into list (Req1) and calc BMI
-    final_list = []
-    for r in master_string_list: # iterate through rows
-        try:
-            r_list = parse_row(r) # list of items in current row (tested, updates each itrn)
-            if len(r_list) < 5: # if parse_row returned an error message, skip this row
-                continue
-            e_ID = r_list[0] # get ID, weight and height
-            wt = r_list[3]
-            ht = r_list[4]
-            bmi = compute_BMI(ht,wt)
-            new_tuple = (str(e_ID), str(bmi))
-            final_list.append(new_tuple)
-        except MissingValueException as mve:
-            print(mve)
-        except MeasurementUnitException as mue:
-            print(mue)
-        except TextFormatException as tfe:
-            print(tfe)
+        for row in datareader:
+            try:
+                # parse row into list of items, and convert to numeric types where appropriate
+                r_list = parse_row(','.join(row))
+
+                # instantiates a PatientExam object with the parsed data
+                # attributes in order: exam_id (int), date, name, weight (int), height (float)
+                new_patient = PatientExam(r_list[0], r_list[1], r_list[2], r_list[3], r_list[4])
+                all_patients.append(new_patient)
+                all_bmi.append(new_patient.get_BMI())
+                month = new_patient.get_exam_month()
+                exam_months_count[month] += 1
+
+            except MissingValueException as mve:
+                print(mve)
+            except MeasurementUnitException as mue:
+                print(mue)
+            except TextFormatException as tfe:
+                print(tfe)
+        
+        avg_bmi = sum(all_bmi) / len(all_bmi)
+        max_month = max(exam_months_count, key=exam_months_count.get)
+        print("The average BMI across all patients is: ", avg_bmi)
+        print("The busiest month for the clinic was: ", parse_month(max_month))
+        patient_list_print_yn = input("Would you like to print the list of all patient objects?" \
+        "Enter y to print, any other input will end program.")
+        if patient_list_print_yn == 'y':
+            print("List of all patient objects: \n", all_patients)
+
 
 main()
+print("Thank you for trying out our program. End of script.")
