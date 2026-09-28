@@ -1,11 +1,6 @@
 from file_IO import load_from_html, load_from_csv
 from data_processing import print_stats
 
-"""
-    What main6.py does before edits:
-    Loads a dataset from student_dataset.txt (HTML)
-    and prints statistics about the dataset."""
-
 def check_data_format(file_name: str) -> str:
     """
     checks the data format of the dataset in student_dataset.txt
