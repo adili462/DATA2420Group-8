@@ -6,7 +6,8 @@ class Driver:
         :param name: the driver's name
         :param points: points scored by this driver
         """
-        pass # your code here
+        self.name = name
+        self.points = points
 
     def __repr__(self) -> str:
         """
@@ -14,8 +15,7 @@ class Driver:
         It should return a string that describes this Driver. For example:
         "Carlos Sainz (200 pts)"
         """
-        pass # your code here
-
+        return "" + self.name + " (" + str(self.points) + " pts)"
 
 class Team:
 
@@ -23,20 +23,24 @@ class Team:
         """
         :param name: the team's name
         """
-        pass # your code here
+        self.name = name
+        self.drivers = []
 
     def add_driver(self, driver: Driver) -> None:
         """
         adds a Driver to this team (by appending it to self.drivers)
         :param driver: the Driver object to add to this Team
         """
-        pass # your code here
+        self.drivers.append(driver)
 
     def get_total_points(self) -> int:
         """
         :return: sum of points scored by this team's Drivers
         """
-        pass # your code here
+        total_pts = 0
+        for driver in self.drivers:
+            total_pts += driver.points
+        return total_pts
 
     def __repr__(self) -> str:
         """
@@ -44,7 +48,13 @@ class Team:
         It should return a string that describes this Team, for example:
         "FERRARI with drivers Carlos Sainz, Charles Leclerc. Total pts: 406"
         """
-        pass # your code here
+        dr_string = ""
+        for driver in self.drivers:
+            if self.drivers[-1] == driver: # if we're on the last driver
+                dr_string += driver + "."
+            else: # if we have more drivers to add, add a comma
+                dr_string += driver + ", "
+        return "" + self.name + " with drivers " + dr_string + "Total pts: " + str(self.get_total_points())
     
     def __lt__(self, other) -> bool:
         """
@@ -54,4 +64,7 @@ class Team:
         :param other: another Team object
         :return: True if this Team has less points than other
         """
-        pass # your code here
+        if self.get_total_points() < other.get_total_points():
+            return True
+        else:
+            return False
