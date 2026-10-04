@@ -16,14 +16,30 @@ def parse_row(row: str) -> dict:
     # use .split() and ID numbers/replace in list later
     r_items = row.split(',') # list of strings for now
 
+    # catch exceptions
+    if any(value.strip() == "" for value in r_items):
+        raise MissingValueException(f"Missing value for Driver {r_items[0]}")
+    # check if row is correct length
+    if len(r_items) != 3:
+        name_return = r_items[0]
+        raise MissingValueException(f"Missing value for Driver {r_items[0]}")
+
+    # detect missing values (empty strings) before attempting conversion
     if not row.strip():
-        # detect missing values (empty strings) before attempting conversion
         raise MissingValueException(f"Missing value for Driver {r_items[0]}")
 
     keys = ["Driver", "Team", "Points"]
     values = row.strip().split(",")
-    # convert points to int
+
+    # checks if points are integers; convert points to int
+    pts = values[-1]
+    if not pts.isdigit:
+        raise ValueError(f"Points for Driver {r_items[0]} must be an integer.")
     values[-1] = int(values[-1]) # type: ignore
+
+    # checks if points are positive
+    if values[-1] < 0:
+        raise ValueError(f"Points for Driver {r_items[0]} must be positive.")
 
     return dict(zip(keys, values)) # type: ignore # ignore error
 
@@ -66,6 +82,8 @@ def main():
 
             except MissingValueException as mve:
                 print(mve)
+            except ValueError as ve:
+                print(ve)
 
     # sorting
     sort_team_list = sorted(team_list)
