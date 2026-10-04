@@ -51,10 +51,10 @@ class Team:
         dr_string = ""
         for driver in self.drivers:
             if self.drivers[-1] == driver: # if we're on the last driver
-                dr_string += driver + "."
+                dr_string += driver.name + "."
             else: # if we have more drivers to add, add a comma
-                dr_string += driver + ", "
-        return "" + self.name + " with drivers " + dr_string + "Total pts: " + str(self.get_total_points())
+                dr_string += driver.name + ", "
+        return "" + self.name + " with drivers " + dr_string + " Total pts: " + str(self.get_total_points())
     
     def __lt__(self, other) -> bool:
         """
