@@ -4,3 +4,9 @@ class OutOfSampleError(Exception):
     outside the historical min/max range.
     """
     pass
+
+class MissingValueException(Exception):
+    """
+    Raised during parsing when a row has missing values.
+    """
+    pass
