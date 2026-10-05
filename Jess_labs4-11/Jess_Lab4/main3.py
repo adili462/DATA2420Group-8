@@ -10,9 +10,7 @@ def parse_row(row: str) -> dict:
     :param row: the string row read from the file
     :return: the parsed row, as a dict
     """
-
-    # check right # of items per row?
-
+    
     # use .split() and ID numbers/replace in list later
     r_items = row.split(',') # list of strings for now
 
