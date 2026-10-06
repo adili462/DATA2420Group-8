@@ -115,3 +115,21 @@ class DataTable:
         """
         col = self.get_column(col_name) # list
         return max(col)
+
+    def __len__(self) -> int:
+        """
+        Return length (number of rows) of the DataTable.
+        """
+        return len(self._rows)
+
+    def __iter__(self) -> iter:
+        """
+        Return an iterator over the rows of the DataTable.
+        """
+        return iter(self._rows)
+
+    # def __getitem__(self, row_idx: int) -> dict:
+    #     """
+    #     Return a row using list-style indexing.
+    #     """
+    #     return self._rows[row_idx]
