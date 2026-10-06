@@ -34,7 +34,7 @@ def parse_row(row: str) -> list:
     if not eID.strip(): # detect missing values (empty strings) before attempting conversion
         raise MissingValueException(f"Missing value for Exam ID {r_items[0]}")
 
-    r_items[0] = int(eID) # exam ID -> int
+    r_items[0] = int(eID) # type: ignore # exam ID -> int
     eID_int = r_items[0] # store int version of exam ID for exception message
 
     if not weight_kg.strip():
@@ -42,11 +42,11 @@ def parse_row(row: str) -> list:
 
     if not weight_kg.isdigit(): # if weight is not an integer string, raise format error
         raise TextFormatException(f"Invalid weight format for Exam ID {eID_int}: is float, expected int")
-    r_items[3] = int(weight_kg) # if weight not missing, convert to int
+    r_items[3] = int(weight_kg) # pyright: ignore[reportArgumentType] # if weight not missing, convert to int
 
     if not height_m.strip():
         raise MissingValueException(f"Missing value for height, Exam ID {eID_int}")
-    r_items[4] = float(height_m) # if height not missing, convert to float
+    r_items[4] = float(height_m) # pyright: ignore[reportArgumentType] # if height not missing, convert to float
 
     if r_items[4] > 3.0: # if height is greater than 3 meters, raise MeasurementUnitException
         raise MeasurementUnitException(f"Invalid measurement unit for height, Exam ID {eID_int}")
@@ -91,7 +91,7 @@ def main():
                 print(tfe)
         
         avg_bmi = sum(all_bmi) / len(all_bmi)
-        max_month = max(exam_months_count, key=exam_months_count.get)
+        max_month = max(exam_months_count, key=exam_months_count.get) # type: ignore
         print("The average BMI across all patients is: ", avg_bmi)
         print("The busiest month for the clinic was: ", parse_month(max_month))
         patient_list_print_yn = input("Would you like to print the list of all patient objects?" \
