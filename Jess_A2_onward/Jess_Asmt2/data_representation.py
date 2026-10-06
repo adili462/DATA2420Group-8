@@ -34,11 +34,18 @@ class DataTable:
         # detect exceptional case: can't convert to float
         r_float_list = []
         for item in r_items:
-            if not (item.isnumeric()):
-                raise ValueError(f"Cannot convert {item} to float in row {r_items}")
-            else:
-                #print(item, "after col num", len(r_float_list), "row content: ", r_items)
+            try:
                 r_float_list.append(float(item))
+            except ValueError:
+                raise ValueError(
+                    f"Cannot convert {item} to float in row {r_items}"
+                ) from None
+        # for item in r_items:
+        #     if not (item.isnumeric()):
+        #         raise ValueError(f"Cannot convert {item} to float in row {r_items}")
+        #     else:
+        #         #print(item, "after col num", len(r_float_list), "row content: ", r_items)
+        #         r_float_list.append(float(item))
         # convert r_float_list to dict with keys from header
         return dict(zip(col_names, r_float_list))
 

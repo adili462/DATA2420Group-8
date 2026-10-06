@@ -7,7 +7,21 @@ def calculate_accuracy(predictions, actual):
     """
     Calculate prediction accuracy.
     """
-    #for prd in predictions:
+    idx = 0 # index to loop through actual
+    acc_num = 0 # tracks accuracy. increases by 1 with each accurate prediction
+    length = len(predictions)
+    for prd in predictions:
+        if idx < len(predictions): # exit loop when index reaches end of list 
+            # get rid of after fixing actual?
+            if prd not in [0, 1]:
+                raise ValueError(f"Prediction value {prd} is not 0 or 1.")
+
+            if prd == actual[idx]:
+                acc_num += 1
+
+            idx += 1
+    
+    return (acc_num / len(predictions)) # accuracy % of predictions
 
 
 
@@ -37,7 +51,7 @@ def main():
     # create list of column names (features) before iterating thru all patients
     for feat in col_names:
         min_hist, max_hist = nn_predictor.feature_ranges[feat]
-        print(f"Historical range for {feat}: {min_hist, max_hist}")
+        # print(f"Historical range for {feat}: {min_hist, max_hist}")
 
     # Predict every new case
     for i in range(len(new_cases)):
@@ -55,8 +69,7 @@ def main():
             
         except OutOfSampleError as e:
             print(e)
-            "add exceptional patient value (outside of 1-10)!!!"
-    print(nn_predictions)
+    print(mode_predictions)
     # Get true labels
     actual_labels = labels.get_column("TumorType")
 

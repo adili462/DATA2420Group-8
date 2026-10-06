@@ -76,7 +76,7 @@ class NearestNeighborPredictor(Predictor):
 
             if p1_feat > max_hist or p1_feat < min_hist:
                 raise OutOfSampleError(
-                    f"A {feat} value of {p1_feat} is outside the historical"
+                    f"A {feat} value of {p1_feat} is outside the historical "
                     f"range, {min_hist} to {max_hist}, for patient row {new_patient}"
                 )
             # calculate
