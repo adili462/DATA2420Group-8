@@ -2,11 +2,6 @@ from classes import Team, Driver
 
 
 def load_teams(filename: str) -> dict:
-    """
-    Task 2: reads the csv file and creates the Team and Driver objects
-    :param filename: name of a csv file with the columns Driver,Team,Points
-    :return: a dictionary where key = team name and value = that team's Team object
-    """
     teams = {}
 
     file = open(filename, 'r')
