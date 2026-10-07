@@ -21,7 +21,7 @@ def load_teams(filename: str) -> dict:
             print('Skipping bad line:', line)
             continue
 
-        # each team appears many times in the file: only create ONE Team object for it
+        # each team appears many times in the file: only neeed to create ONE Team object for it
         if team_name not in teams:
             teams[team_name] = Team(team_name)
 
