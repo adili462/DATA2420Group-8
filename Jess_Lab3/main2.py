@@ -50,6 +50,8 @@ def parse_row(row: str) -> list:
 
     if r_items[4] > 3.0: # if height is greater than 3 meters, raise MeasurementUnitException
         raise MeasurementUnitException(f"Invalid measurement unit for height, Exam ID {eID_int}")
+    if r_items[3] > 90: # if weight is greater than 90, raise MeasurementUnitException
+        raise MeasurementUnitException(f"Exam no. {eID_int}: A value is in the wrong units.")
 
     return r_items
 
@@ -96,6 +98,7 @@ def main():
         print("The busiest month for the clinic was: ", parse_month(max_month))
         patient_list_print_yn = input("Would you like to print the list of all patient objects?" \
         "Enter y to print, any other input will end program.")
+
         if patient_list_print_yn == 'y':
             print("List of all patient objects: \n", all_patients)
 
