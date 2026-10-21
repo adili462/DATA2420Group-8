@@ -1,0 +1,8 @@
+<table>
+<thead>
+<tr><td>name</td><td>age</td></tr>
+</thead>
+<tbody>
+<tr><td>Smith, John</td><td>30</td></tr>
+</tbody>
+</table>

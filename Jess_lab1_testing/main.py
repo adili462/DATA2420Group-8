@@ -23,43 +23,39 @@ def parse_row(row: str) -> list:
     r_items = row.split(',') # list of strings for now
 
     # check if the row has the correct number of items
-    try:
-        if len(r_items) != 5:
-            raise TextFormatException()
-    except TextFormatException:
+
+    if len(r_items) != 5:
         id_return = r_items[0]
-        print(f"Items for Exam ID {id_return} are wrongly formatted")
-        return ['Invalid row format:', row]
-    else:
-        # hard code indexes to convert to number types
-        eID = r_items[0] # exam ID string
-        weight_kg = r_items[3] # weight in kg, string
-        height_m = r_items[4] # height in m, string
+        raise TextFormatException(f"Items for Exam ID {id_return} are wrongly formatted")
 
-        # scan for exceptions
-        try:
-            if not eID.strip(): # detect missing values (empty strings) before attempting conversion
-                raise MissingValueException()
-            r_items[0] = int(eID) # exam ID, int
+    # hard code indexes to convert to number types
+    eID = r_items[0] # exam ID string
+    weight_kg = r_items[3] # weight in kg, string
+    height_m = r_items[4] # height in m, string
 
-            if not weight_kg.strip():
-                raise MissingValueException()
-            r_items[3] = float(weight_kg) # weight in kg, float
+    # scan for exceptions
+    if not eID.strip(): # detect missing values (empty strings) before attempting conversion
+        raise MissingValueException(f"Missing value for Exam ID {r_items[0]}")
+        #return ['Missing value in this row:', row] # edit return message, generic, only needed for length
 
-            if not height_m.strip():
-                raise MissingValueException()
-            r_items[4] = float(height_m) # height in m, float
-            if r_items[4] > 3.0: # if height is greater than 3 meters, raise MeasurementUnitException
-                raise MeasurementUnitException()
+    r_items[0] = int(eID) # exam ID -> int
+    eID_int = r_items[0] # store int version of exam ID for exception message
 
-        except MissingValueException:
-            print("Missing value for Exam ID", r_items[0])
-            return ['Missing value in this row:', row]
-        except MeasurementUnitException:
-            print("Invalid measurement unit for Exam ID", r_items[0])
-            return ['Invalid measurement unit in this row:', row]
+    if not weight_kg.strip():
+        raise MissingValueException(f"Missing value for Exam ID {eID_int}")
+        #return ['Missing value in this row:', row]
+    r_items[3] = float(weight_kg) # if weight not missing, convert to float
 
-        return r_items
+    if not height_m.strip():
+        raise MissingValueException(f"Missing value for Exam ID {eID_int}")
+        #return ['Missing value in this row:', row]
+    r_items[4] = float(height_m) # if height not missing, convert to float
+
+    if r_items[4] > 3.0: # if height is greater than 3 meters, raise MeasurementUnitException
+        raise MeasurementUnitException(f"Invalid measurement unit for Exam ID {eID_int}")
+        #return ['Invalid measurement unit in this row:', row]
+
+    return r_items
 
 
 def main():
@@ -79,15 +75,22 @@ def main():
     # step 2: parse_row into list (Req1) and calc BMI
     final_list = []
     for r in master_string_list: # iterate through rows
-        r_list = parse_row(r) # list of items in current row (tested, updates each itrn)
-        if len(r_list) < 5: # if parse_row returned an error message, skip this row
-            continue
-        e_ID = r_list[0] # get ID, weight and height
-        wt = r_list[3]
-        ht = r_list[4]
-        bmi = compute_BMI(ht,wt)
-        new_tuple = (str(e_ID), str(bmi))
-        final_list.append(new_tuple)
+        try:
+            r_list = parse_row(r) # list of items in current row (tested, updates each itrn)
+            if len(r_list) < 5: # if parse_row returned an error message, skip this row
+                continue
+            e_ID = r_list[0] # get ID, weight and height
+            wt = r_list[3]
+            ht = r_list[4]
+            bmi = compute_BMI(ht,wt)
+            new_tuple = (str(e_ID), str(bmi))
+            final_list.append(new_tuple)
+        except MissingValueException as mve:
+            print(mve)
+        except MeasurementUnitException as mue:
+            print(mue)
+        except TextFormatException as tfe:
+            print(tfe)
 
     # set up new CSV for writing
     with open('output.csv', mode='w', newline='') as outfile:

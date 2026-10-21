@@ -77,6 +77,8 @@ def main():
 
     next(input_file) #skips header from input_file
 
+    next(input_file) #skips header from input_file
+
     for row in input_file:
         try:
             L = parse_row(row)
@@ -92,4 +94,10 @@ def main():
     input_file.close()
     output_file.close()
 
+<<<<<<< HEAD
 main()
+=======
+
+
+main()
+>>>>>>> origin/main

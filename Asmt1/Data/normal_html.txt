@@ -1,0 +1,9 @@
+<table>
+<thead>
+<tr><td>name</td><td>age</td><td>major</td></tr>
+</thead>
+<tbody>
+<tr><td>Alice</td><td>20</td><td>Biology</td></tr>
+<tr><td>Bob</td><td>21</td><td>Physics</td></tr>
+</tbody>
+</table>
