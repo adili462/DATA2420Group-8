@@ -94,10 +94,4 @@ def main():
     input_file.close()
     output_file.close()
 
-<<<<<<< HEAD
 main()
-=======
-
-
-main()
->>>>>>> origin/main
